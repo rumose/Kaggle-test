@@ -1,0 +1,106 @@
+\documentclass[sigconf]{acmart}
+\synctex=1
+
+
+% Copyright
+%\setcopyright{none}
+%\setcopyright{acmcopyright}
+%\setcopyright{acmlicensed}
+\setcopyright{rightsretained}
+%\setcopyright{usgov}
+%\setcopyright{usgovmixed}
+%\setcopyright{cagov}
+%\setcopyright{cagovmixed}
+
+
+% DOI
+\acmDOI{10.475/123_4}
+
+% ISBN
+\acmISBN{123-4567-24-567/08/06}
+
+%Conference
+%\acmConference[WOODSTOCK'97]{ACM Woodstock conference}{July 1997}{El
+%  Paso, Texas USA}
+%\acmYear{1997}
+\copyrightyear{2016}
+
+
+
+%=================================================================
+% 
+\newcount\DraftStatus  % 0 suppresses notes to selves in text
+\DraftStatus=1   % TODO: set to 0 for final version
+%=================================================================
+
+%=================================================================
+\usepackage{comment}
+%=================================================================
+%
+\includecomment{JournalOnly}  
+\includecomment{ConferenceOnly}  
+\excludecomment{TulipStyle}
+%
+%=================================================================
+\input{preamble}
+
+
+%=================================================================
+%
+\begin{document}
+%
+%=================================================================
+% Preamble which will need to be changed for submission
+%
+\title{What's Cooking?}%
+% \titlenote{Produces the permission block, and
+%   copyright information}
+% \subtitle{What is my Subtitle?}
+% \subtitlenote{The full version of the author's guide is available as
+%   \texttt{acmart.pdf} document}
+
+
+\author{Yuhui Mou}
+% \authornote{Dr.~Trovato insisted his name be first.}
+% \orcid{1234-5678-9012}
+\affiliation{%
+  \institution{Xi'an Shiyou University}
+  % \streetaddress{P.O. Box 1212}
+  \city{Xi'an}
+  \country{China}
+  % \postcode{43017-6221}
+}
+\email{905925264@qq.com}
+
+% \author{Gang Li}
+% \authornote{Corresponding Author}
+% \affiliation{%
+%   \institution{Deakin University}
+%   \city{Geelong, VIC 3216}
+%   \country{Australia}}
+% \email{gang.li@deakin.edu.au}
+
+% The default list of authors is too long for headers.
+\renewcommand{\shortauthors}{G. Li et al.}
+
+
+\begin{abstract}
+  There are many countries on the earth, each country has its own characteristic food culture. \\
+  China's hot pot,American pizza,Japanese sushi\ldots These are typical food of every country,
+  while all these delicious food with different ingredients and different spices.Different food 
+  has its own characteristics.Chinese food is rarely used black pepper, 
+  while American food love black pepper.So with this project.
+\end{abstract}
+\keywords{Food,BoW,RandomForestClassifier,\LaTeX }
+
+\maketitle
+
+%=================================================================
+\input{mainbody}
+
+% ----------------------------------------------------------------
+% \bibliography{tuliplab,yourbib}
+% \bibliographystyle{ACM-Reference-Format}
+%=================================================================
+
+\end{document}
