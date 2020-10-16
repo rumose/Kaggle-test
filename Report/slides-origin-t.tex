@@ -714,12 +714,27 @@ while American food love black pepper.So with this project.
 % \end{itemize}
 % \vspace{0.75cm}
 % \vspace{0.1cm}
-\begin{figure}
+% \begin{figure}
+%   \centering
+%   \selectcolormodel{rgb}
+%   \includegraphics[width=0.35\textwidth]{D://Code//Kaggle-test//Data//train.eps}\\
+%   \caption{Train.json}
+% \end{figure}
+\begin{figure}[htbp]
   \centering
-  \selectcolormodel{rgb}
-  \includegraphics[width=0.4\textwidth]{D://Code//Kaggle-test//Data//train.eps}\\
-  \caption{Train.json}
-\end{figure}
+  \begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//train.eps}
+  \caption{train-data}
+  \end{minipage}
+  \begin{minipage}[t]{0.48\textwidth}
+  \centering
+  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//test.eps}
+  \caption{test-data}
+  \end{minipage}
+  \end{figure}
+Each training data has three parts:id cuisine ingredients.The features of the foods come form ingredients,
+and the training goal is ingredients.
 }
 % Outlying Aspects Mining
 % \begin{itemize}
