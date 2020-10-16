@@ -10,8 +10,8 @@ test_filename = 'C:/Users/牟昱辉/Desktop/mid-test/test.json'
 
 print('读取训练集')
 train = pd.read_json(train_filename)
-# 最大特征数量 词频排序的前max_features个词创建语料库
-vectorizer = CountVectorizer(max_features=1000)
+# 最大特征数量 词频排序的前max_features个词创建语料库（降序排列）
+vectorizer = CountVectorizer(max_features=2000)
 # 训练集菜单
 ingredients = train['ingredients']
 # print ingredients 
