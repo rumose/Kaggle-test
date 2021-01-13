@@ -117,7 +117,7 @@ basicstyle=\footnotesize\ttfamily}
 % title
 % TODO: Customize to your Own Title, Name, Address
 %
-\title{What's Cooking?} %总标题
+\title{Sentiment Analysis on Movie Reviews} %总标题
 \author{
 Yuhui Mou
 \\
@@ -133,7 +133,7 @@ Yuhui Mou
   Last Changed by: \textsc{\gitCommitterName}\ (\gitAuthorDate)
  %Last Changed by: \textsc{\gitCommitterName}\ \gitVtagn-\gitAbbrevHash\ (\gitAuthorDate)
  },
-cf={What's Cooking?}, %每页下面的小标题
+cf={Sentiment Analysis on Movie Reviews}, %每页下面的小标题
 }
 
 
@@ -366,7 +366,7 @@ cf={What's Cooking?}, %每页下面的小标题
 %%==========================================================================================
 %%
 \begin{slide}[toc=,bm=]{Introduction}
-\twotonebox {\rotatebox{90}{Cooooook}}{\parbox{.88\textwidth}
+\twotonebox {\rotatebox{90}{sentiments}}{\parbox{.88\textwidth}
 {
 % {\textcolor{orange}{What's Cooking?} aims to identify
 % the \textcolor{orange}{top-k group outlying subspace $s \subseteq F$} in
@@ -382,13 +382,13 @@ cf={What's Cooking?}, %每页下面的小标题
 % % Each object in the group has $d$ features $F = \{f_1, f_2, ..., f_d\}$.
 % % \end{itemize}
 % }
-\emph{Summary}:\textcolor{orange}{Use recipe ingredients to categorize the cuisine} \\
-There are many countries on the earth, each country has its own characteristic food culture. \\
-China's hot pot,American pizza,Japanese sushi\ldots These are typical food of every country,
-while all these delicious food with different ingredients and different spices.Different food 
-has its own characteristics.Chinese food is rarely used black pepper, 
-while American food love black pepper.So with this project.
-\textcolor{red}{According to the ingredient to distinguish food comes from which country.}
+\emph{Summary}:\textcolor{orange}{Classify the sentiment of sentences from the Rotten Tomatoes dataset} \\
+Every years,there are many movies appear on the screen.We can read comments to know a movie is good or not \\
+Movie Reviews come from varying people.Some may say the positive reviews,others may say the negative comments
+of the movies.We can classify a movie by it's comments.But the reviews is a large dataset,people can't read
+every comments.\\
+Here it is,we can use computer to classify the dataset.\\
+\textcolor{red}{According to the reviews to distinguish sentiments.}
 }}
 
 %%==========================================================================================
@@ -611,15 +611,17 @@ while American food love black pepper.So with this project.
   % Each object in the group has $d$ features $F = \{f_1, f_2, ..., f_d\}$.
   % \end{itemize}
   % }
-  In the dataset, we include the recipe id, the type of cuisine, 
-  and the list of ingredients of each recipe (of variable length). 
-  The data is stored in JSON format. \\
+  The dataset is comprised of tab-separated files with phrases from the Rotten Tomatoes dataset.
+   \\Each Sentence has been parsed into many phrases by the Stanford parser.Each phrase has a PhraseId. 
+   Each sentence has a SentenceId.Phrases that are repeated (such as short/common words) are only included once in the data.
+   The date is stored in tsv format.
   \begin{itemize}
-      \item  train.json - the training set containing recipes id, type of cuisine, and list of ingredients
-      \item  test.json - the test set containing recipes id, and list of ingredients
+      \item  train.tsv - contains the phrases and their associated sentiment labels. We have 
+      additionally provided a SentenceId so that you can track which phrases belong to a single sentence.
+      \item  test.tsv - contains just phrases. You must assign a sentiment label to each phrase.
   \end{itemize}
-  In the test file test.json, the format of a recipe is the same as train.json, only the cuisine type is removed, 
-  as it is the target variable you are going to predict.
+  In the test file test.tsv, the format of a Sentence is the same as train.tsv, only the sentiment type is removed, 
+  because it is the target variable you are going to predict.
   }}
   \end{slide}
 %%==========================================================================================
@@ -724,17 +726,18 @@ while American food love black pepper.So with this project.
   \centering
   \begin{minipage}[t]{0.48\textwidth}
   \centering
-  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//train.eps}
+  \includegraphics[width=7cm]{D://Kaggle-test//Data////train.eps} 
   \caption{train-data}
   \end{minipage}
   \begin{minipage}[t]{0.48\textwidth}
   \centering
-  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//test.eps}
+  \includegraphics[width=7cm]{D://Kaggle-test//Data////test.eps}
   \caption{test-data}
   \end{minipage}
   \end{figure}
-Each training data has three parts:id cuisine ingredients.The features of the foods come form ingredients,
-and the training goal is ingredients.
+Each training data has four parts:PhraseId	SentenceId	Phrase	Sentiment.
+The features of the reviews come form phrase,
+and the training goal is Sentiment.
 }
 % Outlying Aspects Mining
 % \begin{itemize}
@@ -1001,28 +1004,31 @@ and the training goal is ingredients.
 Read Data 
 \begin{itemize}
 \item
-Read train.json
+Read train.tsv
 \item
-Read test.json
+Read test.tsv
 \end{itemize}
 \item
-Processing Model:Bag-of-words model (BoW model)
+Build a corpus
 \begin{itemize}
-  \item 
-  BoW early in Natural Language Processing and Information Retrieval 
-  This model ignored the grammar and word order elements such as text, 
-  just as it is a collection of several words, the emergence of each
-   word in the document are independent of each otherBoW to use an 
-   unordered list of words to express a text or a document.
+\item 
+Build a corpus. \\
+The text contents of the training set and test set are merged together 
+using the contcat function in Pandas
+\item 
+Import the stop word library\\
+We use words like a, an, and, or, of, at, the and so on. 
+The information about these words is extremely limited.Therefore, what we need to do is to remove the pause words in the text in the NLP analysis process. The advantage 
+of doing this is that we reduce the vocabulary and then reduce the dimension of our feature vector
 \end{itemize}
- \begin{itemize}
-  \item
-  CountVectorizer is a characteristic class of common numerical calculation,
-  Is a text feature extraction method.For each training text, it only considers 
-  each of these words in the frequency of the training in the text.
-  CountVectorizer Converts text of the words in the word frequency matrix.
-  It does this by fit_transform function calculating the number of occurrences of all words.
-  \end{itemize}
+%  \begin{itemize}
+%   \item
+%   CountVectorizer is a characteristic class of common numerical calculation,
+%   Is a text feature extraction method.For each training text, it only considers 
+%   each of these words in the frequency of the training in the text.
+%   CountVectorizer Converts text of the words in the word frequency matrix.
+%   It does this by fit_transform function calculating the number of occurrences of all words.
+%   \end{itemize}
   
 % \begin{figure}
 %    \selectcolormodel{rgb}
@@ -1097,17 +1103,28 @@ Processing Model:Bag-of-words model (BoW model)
 
 %%==========================================================================================
 %%
-\begin{slide}{Step Two }
-% 随机森林
-After processing of data and extract the feature,It's time to choose  a classifier.\\
-\centering\color{red}{\emph{{RandomForestClassifier}}}
+\begin{slide}{Step Two}
+Characteristics of the engineering\\
+% \centering\color{red}{\emph{{RandomForestClassifier}}}
 \begin{itemize}
 \item
-The first step is using feature and target training classifier.
+Bag-Of-Words model\\
+BoW early in Natural Language Processing and Information Retrieval This
+model ignored the grammar and word order elements such as text, just as it is a
+collection of several words, the emergence of each word in the document are
+independent of each otherBoW to use an unordered list of words to express a
+text or a document.
 \item
-The second step is to input data to classifier which has trained before.
-\item 
-Export data and Store them in a document.
+TF-IDF model\\
+TF - IDF (term frequency, inverse document frequency) is a kind of commonly 
+used for information retrieval and data mining weighted technique, often used
+ for digging the key words in the article, and the algorithm is simple and efficient,
+  has often been industry for the first text data cleaning
+  A word in the article the TF - the larger the IDF, so in general the word in 
+  this article the importance of the higher, so each word in the article by calculation 
+  of the TF - IDF, from big to small order, the top of a few words, is the key of the article
+% \item 
+
 \end{itemize}
 % \begin{figure}
   
@@ -1120,19 +1137,19 @@ Export data and Store them in a document.
 %   \includegraphics[width=0.5\textwidth]{D://Code//Kaggle-test//Data//file.eps}\\
 %   \caption{out-file}
 % \end{figure}
-\begin{figure}[htbp]
-  \centering
-  \begin{minipage}[t]{0.48\textwidth}
-  \centering
-  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//cidai.eps}
-  \caption{Construct word bag}
-  \end{minipage}
-  \begin{minipage}[t]{0.48\textwidth}
-  \centering
-  \includegraphics[width=6cm]{D://Code//Kaggle-test//Data//file.eps}
-  \caption{Output}
-  \end{minipage}
-  \end{figure}
+% \begin{figure}[htbp]
+%   \centering
+%   \begin{minipage}[t]{0.48\textwidth}
+%   \centering
+%   \includegraphics[width=6cm]{D://Kaggle-test//Data//cidai.eps}
+%   \caption{Construct word bag}
+%   \end{minipage}
+%   \begin{minipage}[t]{0.48\textwidth}
+%   \centering
+%   \includegraphics[width=6cm]{D://Kaggle-test//Data//file.eps}
+%   \caption{Output}
+%   \end{minipage}
+%   \end{figure}
 %%==========================================================================================
 % \begin{note}
 % Next,
@@ -1147,7 +1164,105 @@ Export data and Store them in a document.
 %%==========================================================================================
 
 \end{slide}
+\begin{slide}{Step Three}
+  Build a classifier\\
+  \begin{itemize}
+    % \item
+    % Naive Bayes Classifiers\\
+   \item
+    Logistic Regression\\
+    Used to estimate the likelihood of something, and also to classify.
+    \end{itemize}
+  Forecast the data in the test set\\
+  \begin{itemize}
+    \item Feature engineering the text in the test set.
+    \item Logical regression classifier is used to predict the text in the test set.
+    \item Format it and save it as a.csv file
+  \end{itemize}
+  
+\end{slide}
+\section{Output}
+\begin{slide}[toc=,bm=]{}
+  % \twocolumn
+  {
+
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=4cm]{D://Kaggle-test//Data//output.eps} 
+    \caption{outp-data}
+    \end{minipage}
+  
+    \end{figure}
+    This is a screenshot of the output file with the 
+    sentence ID in the first column and the emotion ID in the second column.\\
+    0 - negative;
+    1 - somewhat negative;
+    2 - neutral;
+    3 - somewhat positive;
+    4 - positive
+  }
+  \end{slide}
 %%
+\section{Other Way}
+\begin{slide}[toc=,bm=]{}
+  % \twocolumn
+  {CNN-NLP\\
+  \begin{figure}[htbp]
+    \centering
+    \begin{minipage}[t]{0.48\textwidth}
+    \centering
+    \includegraphics[width=10cm]{D://Kaggle-test//Data//cnn.eps}
+    \caption{CNN}
+  
+    \end{minipage}
+  
+    \end{figure}
+    The CNN model was initially applied in the field of image recognition. Text is different from image, and pixel matrix points of image are dense, but text does not have these characteristics. Each word in the sentence is represented by a vector, and the vector of each word is arranged together to form a "graph", which is then processed by CNN.
+     
+  }
+  \end{slide}
+
+\section{Conclusion}
+%%==========================================================================================
+%%
+\begin{slide}[toc=,bm=]{Conclusion}
+\begin{itemize}
+\item
+\smallskip
+I learned the steps of natural language processing.
+\item
+\smallskip
+Know how to deal with large text class data set----\textcolor{orange}{BoW model}.
+\item
+\smallskip
+Learn a classifier-\textcolor{orange}{LR}:can predict the test data and classify test data.
+\item
+\smallskip
+The \textcolor{orange}{CNN} network model can also be used to deal with NLP problems.
+
+
+
+\end{itemize}
+
+%%==========================================================================================
+% \begin{note}
+% In conclusion,
+% we firstly formalized the problem of
+% group outlying aspects mining,
+
+% Then proposed a novel method GOAM algorithm to address the problem of
+% group outlying aspects mining,
+% and the proposed method use pruning to reduce time complexity
+% while identifying the suitable set of outlying features for the interested group.
+
+% Thank you and any question?
+% \end{note}
+%%==========================================================================================
+
+\end{slide}
+
 %%==========================================================================================
 
 
@@ -1655,50 +1770,51 @@ Export data and Store them in a document.
 % %%==========================================================================================
 
 
-\section{Conclusion}
+% \section{Conclusion}
 %%==========================================================================================
 %%
-\begin{slide}[toc=,bm=]{Conclusion}
-\begin{itemize}
-\item
-\smallskip
-I can learn about the\textcolor{orange}{eating habits}
-of \textcolor{orange}{different countries} through this competition;
-\item
-\smallskip
-I can practice professional skills  ;
-\item
-\smallskip
-We can practice our competition tools,such as \textcolor{orange}{Latex Smartgit Github Python Data mining}\dots ;
-\item 
-\smallskip
-Know how to deal with large text class data set----\textcolor{orange}{BoW model}.
-\item
-\smallskip
-Learn a classifier-RandomForestClassifier:can predict the test data and classify test data.
-\item
-\smallskip
-But this method still has some drawbacks,such as test data just have txt,it's a single data.And,I just used
-one method to solve this problem.When I extracted the feature of the data and classified the train date,I
-just used CountVectorizer and RandomForestClassifier.This is the disadvantages of my project.
-\end{itemize}
 
-%%==========================================================================================
-% \begin{note}
-% In conclusion,
-% we firstly formalized the problem of
-% group outlying aspects mining,
+% \begin{slide}[toc=,bm=]{Conclusion}
+% \begin{itemize}
+% \item
+% \smallskip
+% I can learn about the\textcolor{orange}{eating habits}
+% of \textcolor{orange}{different countries} through this competition;
+% \item
+% \smallskip
+% I can practice professional skills  ;
+% \item
+% \smallskip
+% We can practice our competition tools,such as \textcolor{orange}{Latex Smartgit Github Python Data mining}\dots ;
+% \item 
+% \smallskip
+% Know how to deal with large text class data set----\textcolor{orange}{BoW model}.
+% \item
+% \smallskip
+% Learn a classifier-RandomForestClassifier:can predict the test data and classify test data.
+% \item
+% \smallskip
+% But this method still has some drawbacks,such as test data just have txt,it's a single data.And,I just used
+% one method to solve this problem.When I extracted the feature of the data and classified the train date,I
+% just used CountVectorizer and RandomForestClassifier.This is the disadvantages of my project.
+% \end{itemize}
 
-% Then proposed a novel method GOAM algorithm to address the problem of
-% group outlying aspects mining,
-% and the proposed method use pruning to reduce time complexity
-% while identifying the suitable set of outlying features for the interested group.
+% %%==========================================================================================
+% % \begin{note}
+% % In conclusion,
+% % we firstly formalized the problem of
+% % group outlying aspects mining,
 
-% Thank you and any question?
-% \end{note}
-%%==========================================================================================
+% % Then proposed a novel method GOAM algorithm to address the problem of
+% % group outlying aspects mining,
+% % and the proposed method use pruning to reduce time complexity
+% % while identifying the suitable set of outlying features for the interested group.
 
-\end{slide}
+% % Thank you and any question?
+% % \end{note}
+% %%==========================================================================================
+
+% \end{slide}
 %%
 %%==========================================================================================
 

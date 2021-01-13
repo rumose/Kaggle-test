@@ -53,7 +53,7 @@
 \colorlet{backgroundcolor}{blue!10}
 
  % Title, Author, Institute
-\title{What's Cooking?}
+\title{Sentiment Analysis on Movie Reviews}
 \author{Yuhui Mou}
 \institute{Xi'an Shiyou University
 }
@@ -126,35 +126,39 @@
     % formalize the research problem of \emph{group outlying aspects mining},
     % and propose a novel algorithm named GOAM to solve the
     % \emph{group outlying aspects mining} problem.
-  There are many countries on the earth, each country has its own characteristic food culture. \\
-  China's hot pot,American pizza,Japanese sushi\ldots These are typical food of every country,
-  while all these delicious food with different ingredients and different spices.Different food 
-  has its own characteristics.Chinese food is rarely used black pepper, 
-  while American food love black pepper.So with this project.
-  Every foods have their own characteristics of each country.
-  In this project,we can distinguish different countries by
-  different ingredients.\\
-  This is an interesting project.
+    Summary:Classify the sentiment of sentences from the Rotten Tomatoes
+    dataset\\
+    Every years,there are many movies appear on the screen.We can read com-
+    ments to know a movie is good or not\\
+    Movie Reviews come from varying people.Some may say the positive re-
+    views,others may say the negative comments of the movies.We can classify
+    a movie by it’s comments.But the reviews is a large dataset,people can’t read
+    every comments.\\
+    Here it is,we can use computer to classify the dataset.
+    According to the reviews to distinguish sentiments.
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 \block{Data}{
-  This event provides two data sets that can be used: train.json  test.json\\
+  This event provides two data sets that can be used: train.tsv  test.tsv\\
 \begin{itemize}
     \item
     %\emph{Group Outlying Aspects Mining}
-    \textbf{train.json}:In the dataset, we include the recipe id, the type of cuisine, and the list of ingredients of each recipe (of variable length). The data is stored in JSON format.
+    \textbf{train.tsv}: contains the phrases and their associated sentiment labels.
+    We have additionally provided a SentenceId so that you can track which
+    phrases belong to a single sentence.
     \item
-    \textbf{test.json}:In the test file test.json, the format of a recipe is the same as train.json, only the cuisine type is removed, as it is the target variable you are going to predict.
+    \textbf{test.tsv}:contains just phrases. You must assign a sentiment label to each
+    phrase.
 \end{itemize}
 
 \begin{center}
     \begin{minipage}{0.3\linewidth}
     \centering
     \begin{tikzfigure}
-      \includegraphics[width=0.9\textwidth]{D://Code//Kaggle-test//Data//train-p.png}
+      \includegraphics[width=0.9\textwidth]{D://Kaggle-test//Data//train1.png}
     {\small{train data}}
     \end{tikzfigure}%
     \end{minipage}
@@ -162,7 +166,7 @@
     \begin{minipage}{0.3\linewidth}
     \centering
     \begin{tikzfigure}
-      \includegraphics[width=0.9\textwidth]{D://Code//Kaggle-test//Data//test-p.png}
+      \includegraphics[width=0.9\textwidth]{D://Kaggle-test//Data//test1.png}
     {\small{test data}}
     \end{tikzfigure}%
     \end{minipage}
@@ -170,7 +174,7 @@
     \begin{minipage}{0.3\linewidth}
       \centering
       \begin{tikzfigure}
-        \includegraphics[width=0.9\textwidth]{D://Code//Kaggle-test//Data//out-p.png}
+        \includegraphics[width=0.9\textwidth]{D://Kaggle-test//Data//output.png}
       {\small{Group Outlying Aspects Mining}}
       \end{tikzfigure}%
       \end{minipage}
@@ -209,11 +213,33 @@
 
 \begin{description}
 \item 
-RandomForestClassifier
-\includegraphics[width=0.2\textwidth]{D://Code//Kaggle-test//Data//suijisenlin.png}\\
-There are many classification tree randomly in the forest. We will classify an input samples, we need to input sample input to classify each tree. Make an image of the parable: the meeting in the forest, discuss whether an animal is mouse or squirrel, every tree should be independently published his views on the question, every tree that is voting. This animal is mouse or squirrel, according to vote to determine, won the most votes category is the classification results of the forest. Each tree in the forest are independent, unrelated trees make 99.9\%  of the predicted results to cover all the situation, the forecast results will cancel each other out. A good tree prediction results will be detached from the multitude of "noise", make a good predictions. Several weak classifier classification result vote choice, so as to form a strong classifier, which is the ideas of the random forest bagging
+TF-IDF model\\
+TF - IDF (term frequency, inverse document frequency) is a kind of commonly 
+used for information retrieval and data mining weighted technique, often used
+ for digging the key words in the article, and the algorithm is simple and efficient,
+  has often been industry for the first text data cleaning
+  A word in the article the TF - the larger the IDF, so in general the word in 
+  this article the importance of the higher, so each word in the article by calculation 
+  of the TF - IDF, from big to small order, the top of a few words, is the key of the article
   
 \end{description}
+\begin{description}
+  \item  Logistic Regression\\
+  Used to estimate the likelihood of something, and also to classify.\\
+  Logical regression is such a process: in the face of a regression or classification problem,
+   the cost function is established, and then the optimal model parameters are solved iteratively through the
+    optimization method, and then the quality of the model we solve is tested and verified.\\
+Although Logistic regression has "regression" in its name, it is actually a classification method, 
+mainly used for two classification problems (that is, there are only two outputs, representing two categories respectively).
+
+\end{description}
+% \begin{description}
+%   \item 
+%   RandomForestClassifier
+%   \includegraphics[width=0.2\textwidth]{D://Code//Kaggle-test//Data//suijisenlin.png}\\
+%   There are many classification tree randomly in the forest. We will classify an input samples, we need to input sample input to classify each tree. Make an image of the parable: the meeting in the forest, discuss whether an animal is mouse or squirrel, every tree should be independently published his views on the question, every tree that is voting. This animal is mouse or squirrel, according to vote to determine, won the most votes category is the classification results of the forest. Each tree in the forest are independent, unrelated trees make 99.9\%  of the predicted results to cover all the situation, the forecast results will cancel each other out. A good tree prediction results will be detached from the multitude of "noise", make a good predictions. Several weak classifier classification result vote choice, so as to form a strong classifier, which is the ideas of the random forest bagging
+    
+% \end{description}
   
 %   	We propose the \emph{GOAM} algorithm to solve the research problem of
 %     \emph{Group Outlying Aspects Mining}.
@@ -289,9 +315,9 @@ There are many classification tree randomly in the forest. We will classify an i
     Read Data \\
   \begin{itemize}
   \item
-  Read train.json
+  Read train.tsv
   \item
-  Read test.json
+  Read test.tsv
   \end{itemize}
   \item
   Processing Model:Bag-of-words model (BoW model)\\
@@ -312,7 +338,7 @@ There are many classification tree randomly in the forest. We will classify an i
     
   \end{itemize}
   \item 
-RandomForestClassifier\\
+  Logistic Regression\\
   \begin{itemize}
   \item
   The first step is using feature and target training classifier.
@@ -331,13 +357,17 @@ RandomForestClassifier\\
 
 
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
-% \block[titleleft]{Experiment}
-% {
-% \begin{description}
-%   	\item[Synthetic Dataset] contains $10$ groups and $8$ features.
-%     Each group consists of $10$ members,
-%     and each member has $8$ features.
-% \end{description}
+\block[titleleft]{Other Way}
+{
+\begin{description}
+  	\item[CNN NLP] \\
+  	The CNN model was initially applied in the field of image recognition. 
+    Text is different from image, and pixel matrix points of image are dense, 
+    but text does not have these characteristics. Each word in the sentence is represented 
+    by a vector, and the vector of each word is arranged together to form a "graph", 
+    which is then processed by CNN.
+   
+\end{description}
 % \vspace{.5cm}
 % \begin{tabular}{ c | c | c | c }
 %     \toprule
@@ -351,12 +381,7 @@ RandomForestClassifier\\
 %      \bottomrule
 % \end{tabular}
 % \vspace{.2cm}
-% \begin{description}
-%     \item
-%     It can be observed that the GOAM method can identify the trivial outlying features
-%     and non-trivial outlying subspaces correctly and is obvious from the table
-%     that the accuracy of GOAM is the best, which is ($100\%$).
-% \end{description}
+
 
 % \begin{description}
 % \item[NBA Dataset] was collected from Yahoo Sports
@@ -378,14 +403,43 @@ RandomForestClassifier\\
 %     \bottomrule
 % \end{tabular}
            
-% \begin{minipage}{0.5\linewidth}
-%     \centering
-%     \begin{tikzfigure}
-%     \missingfigure[figcolor=white]{Testing figcolor}
-
-%     {\small{New Orleans Pelicans on FT\%}}
-%     \end{tikzfigure}%
-% \end{minipage}
+% 
+\begin{center}
+  \begin{minipage}{0.3\linewidth}
+  \centering
+  \begin{tikzfigure}
+  \centering
+    \includegraphics[width=2.0\textwidth]{D://Kaggle-test//Data//cnn.png}
+  {\small{CNN}}
+  \end{tikzfigure}%
+  \end{minipage}
+  % \hfill
+  % \begin{minipage}{0.3\linewidth}
+  % \centering
+  % \begin{tikzfigure}
+  %   \includegraphics[width=0.9\textwidth]{D://Kaggle-test//Data//test1.png}
+  % {\small{test data}}
+  % \end{tikzfigure}%
+  % \end{minipage}
+  % \hfill 
+  % \begin{minipage}{0.3\linewidth}
+  %   \centering
+  %   \begin{tikzfigure}
+  %     \includegraphics[width=0.9\textwidth]{D://Kaggle-test//Data//output.png}
+  %   {\small{Group Outlying Aspects Mining}}
+  %   \end{tikzfigure}%
+  %   \end{minipage}
+    
+\end{center}
+\begin{description}
+  \item
+  Before importing the text into the input layer,
+You need to preprocess the text. Preprocessing includes word segmentation, depause and vectorization
+It is very important to determine the word vector. When the dimension of the word vector
+If it is too high, the operation times and running time of the system will be increased. When the word vector dimension is too low, it can not well reflect the word and
+The approximate relationship between words and category differences affect the effect of text classification of the model. In the experiment, the accuracy of word vector 
+dimension pairs is studied by testing 32, 64, 128 and 256 dimensions respectively
+\end{description}
 % \hfill
 % \begin{minipage}{0.5\linewidth}
 %     \centering
@@ -395,13 +449,20 @@ RandomForestClassifier\\
 %     {\small{New Orleans Pelicans on FTA}}
 %     \end{tikzfigure}%
 % \end{minipage}
-% \vspace{.2cm}
-% \begin{description}
-% \item
-% \texttt{New Orleans Pelicans} has more players with
-% lower \{free throw percentage\}, \{free throws attempted\}.
+\vspace{.2cm}
+\begin{description}
+\item
+The CNN model should be
+For text classification, it only needs to import the preprocessed text set into the input layer, and the features will be generated automatically through model training
+Words, greatly simplifies the selection of characteristic words.
 % \end{description}
-% }
+% \begin{description}
+%   \item Humans tend to selectively block it out
+%   Some unimportant information can be ignored, but pay more attention to the information considered to be important, also known as attention
+%   The focal point. The attention mechanism in deep learning is essentially similar to the selective visual attention mechanism in humans, with the main purpose of
+%   Devote your limited attention resources to information that is more important and critical to the task at hand.
+% \end{description}
+}
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
 
 
@@ -412,10 +473,10 @@ RandomForestClassifier\\
 {
 \begin{description}
   \item 
-  Every country has its specialties,each cuisine has it's own ingredients.During this competition,I learned how to
-identify the country by different ingredients.At the same time, I also learned how to deal with plain text data set-
-BoW model,besides,CountVectorizer is also a great way to extracting text feature.In the end,using feature we extarcted to
-classify in RandomForestClassifier.
+  I learned the steps of natural language processing.\\
+ Know how to deal with large text class data set—-BoW model.\\
+Learn a classifier-LR:can predict the test data and classify test data.\\
+The CNN network model can also be used to deal with NLP problems.
 \end{description}
 }
 %%%%%%%%%% -------------------------------------------------------------------- %%%%%%%%%%
@@ -430,7 +491,7 @@ radius=2cm, width=.26\textwidth]{
 Acknowledgement
 \begin{itemize}
   \item 
-  We want to thank Yummly for providing this unique dataset. Kaggle is hosting this playground competition for fun and practice.
+  We want to thank Kaggle for providing this unique dataset. Kaggle is hosting this playground competition for fun and practice.
   The authors would like to thank \ldots
  \end{itemize}
 }

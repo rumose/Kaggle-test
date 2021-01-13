@@ -5,10 +5,16 @@
 % \begin{JournalOnly}
 % and~\citep{BJL11J01} or~\citet{BJL11J01}.
 % \end{JournalOnly}
-The food has its own characteristics of each country.
-In this project,we can distinguish different countries by
-different ingredients.\\
-This is an interesting project.
+     Summary:Classify the sentiment of sentences from the Rotten Tomatoes
+    dataset\\
+    Every years,there are many movies appear on the screen.We can read com-
+    ments to know a movie is good or not\\
+    Movie Reviews come from varying people.Some may say the positive re-
+    views,others may say the negative comments of the movies.We can classify
+    a movie by it’s comments.But the reviews is a large dataset,people can’t read
+    every comments.\\
+    Here it is,we can use computer to classify the dataset.
+    According to the reviews to distinguish sentiments.
 % \todo[fancyline]{Testing.}
 % % and this is for~\cref{sec-conclusions}.
 % \todo[noline]{A note with no line back to the text.}%
@@ -55,9 +61,11 @@ This is an interesting project.
 
 \section{Data} \label{sec-preliminaries}
 
-This event provides two data sets that can be used: train.json  test.json\\
-\textbf{train.json}:In the dataset, we include the recipe id, the type of cuisine, and the list of ingredients of each recipe (of variable length). The data is stored in JSON format. \\
-\textbf{test.json}:In the test file test.json, the format of a recipe is the same as train.json, only the cuisine type is removed, as it is the target variable you are going to predict.
+This event provides two data sets that can be used: train.tsv  test.tsv\\
+\textbf{train.tsv}: contains the phrases and their associated sentiment labels.
+    We have additionally provided a SentenceId so that you can track which
+    phrases belong to a single sentence.\\
+\textbf{test.tsv}:contains just phrases. You must assign a sentiment label to eachphrase.
 
 % \gliMarker  %TODO: GLi Here
 
@@ -68,9 +76,9 @@ This event provides two data sets that can be used: train.json  test.json\\
   Read Data \\
   \begin{itemize}
   \item
-  Read train.json
+  Read train.tsv
   \item
-  Read test.json
+  Read test.tsv
   \end{itemize}
   \item
   Processing Model:Bag-of-words model (BoW model)\\
@@ -90,23 +98,31 @@ This event provides two data sets that can be used: train.json  test.json\\
     CountVectorizer Converts text of the words in the word frequency matrix.
     It does this by fit_transform function calculating the number of occurrences of all words.
     \end{itemize}
+  \begin{itemize}
+    \item  TF-IDF model\\
+    TF - IDF (term frequency, inverse document frequency) is a kind of commonly 
+    used for information retrieval and data mining weighted technique, often used
+     for digging the key words in the article, and the algorithm is simple and efficient,
+      has often been industry for the first text data cleaning
+      A word in the article the TF - the larger the IDF, so in general the word in 
+      this article the importance of the higher, so each word in the article by calculation 
+      of the TF - IDF, from big to small order, the top of a few words, is the key of the article
+  \end{itemize}
   % \begin{figure}
   %    \selectcolormodel{rgb}
   %    \missingfigure{Make a sketch of the structure of a trebuchet.}
   % %  \includegraphics[width=0.4\textwidth]{figures//example3.eps}\\
   %    \caption{EMD of one feature}\label{EMD}
   % \end{figure}
-  \item 
-  RandomForestClassifier\\
+  
+  \item  Logistic Regression\\
+  Used to estimate the likelihood of something, and also to classify.\\
+  Logical regression is such a process: in the face of a regression or classification problem,
+   the cost function is established, and then the optimal model parameters are solved iteratively through the
+    optimization method, and then the quality of the model we solve is tested and verified.\\
+Although Logistic regression has "regression" in its name, it is actually a classification method, 
+mainly used for two classification problems (that is, there are only two outputs, representing two categories respectively).
 
-\begin{itemize}
-\item
-The first step is using feature and target training classifier.
-\item
-The second step is to input data to classifier which has trained before.
-\item 
-Export data and Store them in a document.
-\end{itemize}
 
 
 \end{itemize}
@@ -138,19 +154,24 @@ Export data and Store them in a document.
 % \bottomrule
 % \end{tabular}
 % \end{table}
+\section{Other Way} 
+CNN NLP \\
+  	The CNN model was initially applied in the field of image recognition. 
+    Text is different from image, and pixel matrix points of image are dense, 
+    but text does not have these characteristics. Each word in the sentence is represented 
+    by a vector, and the vector of each word is arranged together to form a "graph", 
+    which is then processed by CNN.
 
 
 \section{Conclusions} \label{sec-conclusions}
-Every country has its specialties,each cuisine has it's own ingredients.During this competition,I learned how to
-identify the country by different ingredients.At the same time, I also learned how to deal with plain text data set-
-BoW model,besides,CountVectorizer is also a great way to extracting text feature.In the end,using feature we extarcted to
-classify in RandomForestClassifier.\\
-Of course,this project has no proper data visualization processing,and I didn't use a variety of methods to compare,
-they are all basic and single methods.
+I learned the steps of natural language processing.\\
+ Know how to deal with large text class data set—-BoW model.\\
+Learn a classifier-LR:can predict the test data and classify test data.\\
+The CNN network model can also be used to deal with NLP problems.
  
 \section*{Acknowledgment}
 
-We want to thank Yummly for providing this unique dataset. Kaggle is hosting this playground competition for fun and practice.
+We want to thank Kaggle for providing this unique dataset. Kaggle is hosting this playground competition for fun and practice.
 The authors would like to thank \ldots\\
-\rightline{\includegraphics[width=0.15\textwidth]{D://Code//Kaggle-test//Data//Yummly_logo.png}}
+\rightline{\includegraphics[width=0.15\textwidth]{D://Kaggle-test//Data//site-logo.png}}
 
