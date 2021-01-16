@@ -87,4 +87,4 @@ final_data = data_test.loc[:, ['PhraseId', 'Sentiment']]
 final_data.head()
 
 # 保存为.csv文件，即为最终结果
-final_data.to_csv('C:/Users/牟昱辉/Desktop/data/predict-file.csv', index=None)
+final_data.to_csv('C:/Users/牟昱辉/Desktop/data/predict-file-2.csv', index=None)
